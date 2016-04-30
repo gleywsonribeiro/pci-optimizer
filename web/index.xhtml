@@ -1,14 +1,99 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Computação Evolutiva</title>
+        <h:outputStylesheet library="css" name="estilo.css"/>
     </h:head>
     <h:body>
-        Hello from Facelets
-        <br />
-        <h:link outcome="welcomePrimefaces" value="Página de boas-vindas do Primefaces" />
+        <p:layout fullPage="true">
+
+            <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
+                <p:panel header="Maximização de função">
+                    <p:graphicImage library="imagens" name="funcao.png" width="277px" height="43px"/>
+                </p:panel>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="south" size="30" closable="true" collapsible="true">
+                Computação Evolutiva - Algoritmos Genéticos
+            </p:layoutUnit>
+
+
+            <p:layoutUnit position="west" size="250" header="Parâmetros" resizable="true" collapsible="true">
+                <p:panel>
+                    <h:form>
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Tamanho da população:" style="float: right"/> 
+                            <p:inputText value="#{agController.ag.tamanhoPopulacao}" size="5"/>
+
+                            <h:outputLabel value="Número de gerações:" style="float: right"/>
+                            <p:inputText value="#{agController.ag.numeroGeracoes}" size="5"/>
+
+                            <h:outputLabel value="Cromossomo:" style="float: right"/>
+                            <h:panelGroup>
+                                <p:inputText id="tmc" value="#{agController.ag.tamanhoCromossomo}" size="5" disabled="true"/>
+                                <p:slider for="tmc" step="2" minValue="10" maxValue="50"/>
+                            </h:panelGroup>
+
+                            <h:outputLabel value="Taxa de Cruzamento:" style="float: right"/>
+                            <p:spinner value="#{agController.ag.taxaCruzamento}" stepFactor="0.05" min="0" max="1" size="5"/>
+
+                            <h:outputLabel value="Taxa de mutação:" style="float: right"/>
+                            <p:spinner value="#{agController.ag.taxaMutacao}" stepFactor="0.01" max="1" min="0" size="5"/>
+
+                            <h:outputLabel value="Crossover:" style="float: right"/>
+                            <p:selectOneMenu value="#{agController.ag.tipoCrossover}">
+                                <f:selectItems value="#{agController.crossovers}"/>
+                            </p:selectOneMenu>
+
+                            <h:outputLabel value="Seleção:" style="float: right"/>
+                            <p:selectOneMenu value="#{agController.ag.selecao}">
+                                <f:selectItems value="#{agController.selecoes}"/>
+                            </p:selectOneMenu>
+
+                            <h:outputLabel value="Elitismo:" style="float: right"/>
+                            <p:selectBooleanCheckbox value="#{agController.ag.elitismo}"/>
+             
+                            <p:commandButton actionListener="#{agController.execute()}" value="Executar" ajax="false"/>
+                        </h:panelGrid>
+
+                    </h:form>
+                </p:panel>
+            </p:layoutUnit>
+            <p:layoutUnit position="center" size="600" header="gráfico" collapsible="false">
+                <p:tabView>
+                    <p:tab title="Desempenho">
+                        <p:panel id="pgrafico">
+                            <p:chart id="grafico" type="line" model="#{agController.model}" style="width: 100%; height: 300px;"/>
+                        </p:panel>
+                        <p:panelGrid columns="3" style="width: 100%">
+                            <p:fieldset legend="Tempo de Execução" style="margin-bottom:20px">
+                                <h:outputText value="#{agController.tempoExecucao} segundos"/>
+                            </p:fieldset>
+                            <p:fieldset legend="Melhor Fitness" style="margin-bottom:20px">
+                                <h:outputText value="#{agController.melhorSolucaoEncontrada.fitness}"/>
+                            </p:fieldset>
+                            <p:fieldset legend="Posição Melhor Fitness" style="margin-bottom:20px">
+                                <h:outputText value="[#{agController.melhorSolucaoEncontrada.x[0]}, #{agController.melhorSolucaoEncontrada.x[1]}]"/>
+                            </p:fieldset>
+                        </p:panelGrid>
+                    </p:tab>
+                    <p:tab title="Indivíduos">
+                        
+                    </p:tab>
+                    <p:tab title="Funcão">
+                        <p:graphicImage library="imagens" name="f06.png" width="80%" height="80%"/>
+                    </p:tab>
+                    <p:tab title="Modelagem">
+                        <p:graphicImage library="imagens" name="AG.png" width="80%" height="80%"/>
+                    </p:tab>
+                </p:tabView>
+
+            </p:layoutUnit>
+        </p:layout>
     </h:body>
 </html>
 
