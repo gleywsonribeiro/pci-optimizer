@@ -6,7 +6,6 @@
 package testes;
 
 import modelo.Cromossomo;
-import modelo.Ponto;
 
 /**
  *
@@ -15,9 +14,30 @@ import modelo.Ponto;
 public class TesteCromossomo {
 
     public static void main(String[] args) {
-        Ponto[] pontos = {new Ponto(), new Ponto(), new Ponto(), new Ponto(5, 4)};
-
-        Cromossomo c = new Cromossomo(pontos);
-        System.out.println(c);
+        Cromossomo[] galera = new Cromossomo[10];
+        int nPontos = 20;
+        
+        for (int i = 0; i < galera.length; i++) {
+            galera[i] = new Cromossomo(nPontos);
+        }
+       
+        for (Cromossomo cromossomo : galera) {
+            System.out.println(cromossomo);
+        }
+        
+        System.out.println("\nVerificando a mutacao");
+        
+        Cromossomo mutavel = new Cromossomo(10);
+        float tx = 0.95f;
+        
+        System.out.println("antes da mutacao: ");
+        System.out.println(mutavel);
+        
+        System.out.println("depois da mutacao:");
+        mutavel.mutacao(tx);
+        System.out.println(mutavel);
+        
+        
+        
     }
 }
