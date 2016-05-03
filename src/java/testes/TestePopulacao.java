@@ -5,23 +5,16 @@
  */
 package testes;
 
-import modelo.Ponto;
+import modelo.Populacao;
 
 /**
  *
  * @author Gleywson Ribeiro
  */
-public class TestePonto {
+public class TestePopulacao {
     public static void main(String[] args) {
-        Ponto[] pontos = new Ponto[20];
+        Populacao p = new Populacao(10);
         
-        for (int i = 0; i < pontos.length; i++) {
-            pontos[i] = new Ponto();
-        }
-        
-        for (Ponto ponto : pontos) {
-            System.out.println(ponto);
-        }
-        
+        System.out.println(p);
     }
 }

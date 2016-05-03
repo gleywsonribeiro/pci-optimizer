@@ -23,8 +23,8 @@ public class Ponto {
     
     public Ponto() {
         Random random = new Random();
-        this.x = random.nextInt(10);
-        this.y = random.nextInt(10);
+        this.x = random.nextDouble() * 10;
+        this.y = random.nextDouble() * 10;
     }
     
 
