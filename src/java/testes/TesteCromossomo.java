@@ -6,6 +6,7 @@
 package testes;
 
 import modelo.Cromossomo;
+import modelo.Ponto;
 
 /**
  *
@@ -14,20 +15,34 @@ import modelo.Cromossomo;
 public class TesteCromossomo {
 
     public static void main(String[] args) {
+        Ponto[] pontos = {new Ponto(0, 0), new Ponto(3, 0), new Ponto(5, 0)};
+        
+//        for (int i = 0; i < pontos.length; i++) {
+//            pontos[i] = new Ponto();
+//        }
+        
+        
+
+        System.out.println("mostrando os pontos");
+        for (Ponto ponto : pontos) {
+            System.out.print(ponto + " ");
+        }
+        System.out.println("");
+        
         Cromossomo[] galera = new Cromossomo[10];
-        int nPontos = 20;
+        
         
         for (int i = 0; i < galera.length; i++) {
-            galera[i] = new Cromossomo(nPontos);
+            galera[i] = new Cromossomo(pontos);
         }
        
         for (Cromossomo cromossomo : galera) {
-            System.out.println(cromossomo);
+            System.out.println(cromossomo + " Fitness: "+cromossomo.getFitness());
         }
         
         System.out.println("\nVerificando a mutacao");
         
-        Cromossomo mutavel = new Cromossomo(10);
+        Cromossomo mutavel = new Cromossomo(pontos);
         float tx = 0.95f;
         
         System.out.println("antes da mutacao: ");
@@ -36,6 +51,9 @@ public class TesteCromossomo {
         System.out.println("depois da mutacao:");
         mutavel.mutacao(tx);
         System.out.println(mutavel);
+        
+        System.out.println("Fitness do mutavel: ");
+        System.out.println(mutavel.getFitness());
         
         
         

@@ -14,14 +14,16 @@ import java.util.Random;
  *
  * @author Gleywson Ribeiro
  */
-public class Cromossomo {
+public class Cromossomo implements Comparable<Cromossomo>{
 
     private final List<Integer> caminho;
+    private final Ponto[] pontos;
 
-    public Cromossomo(int tamanho) {
-        caminho = new ArrayList();
+    public Cromossomo(Ponto[] points) {
+        this.caminho = new ArrayList();
+        this.pontos = points;
         
-        for (int i = 0; i < tamanho; i++) {
+        for (int i = 0; i < points.length; i++) {
             caminho.add(i);
         }
         Collections.shuffle(caminho);
@@ -30,6 +32,12 @@ public class Cromossomo {
     public int getTamanho() {
         return caminho.size();
     }
+
+    public Ponto[] getPontos() {
+        return pontos;
+    }
+    
+    
     
     public void mutacao(double txMutacao) {
         Random gerador = new Random();
@@ -49,19 +57,6 @@ public class Cromossomo {
         }
     } 
 
-    /*
-    public void mutacao(double taxa) {
-        double probabilidade = new Random().nextDouble();
-        
-        if(probabilidade < taxa) {
-            if(this.alelo == 0) {
-                this.setAlelo(1);
-            } else {
-                this.setAlelo(0);
-            }
-        }
-    }
-    */
     
     @Override
     public String toString() {
@@ -75,6 +70,27 @@ public class Cromossomo {
         }
         
         return saida;
+    }
+    
+    public double getFitness() {
+        double fitness = 0;
+
+        for (int i = 0; i < caminho.size() - 2; i++) {
+            fitness += Ponto.distancia(pontos[caminho.get(i)], pontos[caminho.get(i+1)]);
+        }
+        
+        return fitness;
+    }
+
+    @Override
+    public int compareTo(Cromossomo ref) {
+        if (this.getFitness() < ref.getFitness()) {
+            return -1;
+        }
+        if (this.getFitness() > ref.getFitness()) {
+            return 1;
+        }
+        return 0;
     }
     
     
