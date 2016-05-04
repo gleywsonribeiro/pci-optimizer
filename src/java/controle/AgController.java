@@ -12,6 +12,7 @@ import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import modelo.Ag;
+import modelo.Cromossomo;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.chart.ChartSeries;
@@ -73,12 +74,6 @@ public class AgController {
         ChartSeries melhores = new ChartSeries();
         melhores.setLabel("Melhores");
 
-        ChartSeries piores = new ChartSeries();
-        piores.setLabel("Piores");
-
-        ChartSeries desvioPadrao = new ChartSeries();
-        desvioPadrao.setLabel("Desvio Padrão");
-
         ChartSeries media = new ChartSeries();
         media.setLabel("Média");
         
@@ -86,15 +81,11 @@ public class AgController {
 
         for (int i = 0; i < ag.getMelhoresIndividuos().size(); i++) {
             melhores.set(i, ag.getMelhoresIndividuos().get(i).getFitness());
-            piores.set(i, ag.getPioresIndividuos().get(i).getFitness());
-            desvioPadrao.set(i, ag.getDesvioPadrao().get(i));
             media.set(i, ag.getMedia().get(i));
-            dataset.addValue(ag.getMelhoresIndividuos().get(i).getFitness(), "melhores", Integer.valueOf(i));
+            //dataset.addValue(ag.getMelhoresIndividuos().get(i).getFitness(), "melhores", Integer.valueOf(i));
 
         }
         model.addSeries(melhores);
-        model.addSeries(piores);
-        model.addSeries(desvioPadrao);
         model.addSeries(media);
         model.setTitle("Desempenho por Gerações");
         model.setLegendPosition("e"); //nw
@@ -116,11 +107,11 @@ public class AgController {
     }
     
     public Cromossomo getMelhorSolucaoEncontrada() {
-        double melhorFit = Float.MIN_VALUE;
+        double melhorFit = Float.MAX_VALUE;
         Cromossomo temp = null;
         for (Cromossomo i:ag.getMelhoresIndividuos()) {
             
-            if(i.getFitness() > melhorFit) {
+            if(i.getFitness() < melhorFit) {
                 melhorFit = i.getFitness();
                 temp = i;
             }

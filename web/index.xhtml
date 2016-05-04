@@ -12,8 +12,8 @@
         <p:layout fullPage="true">
 
             <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
-                <p:panel header="Maximização de função">
-                    <p:graphicImage library="imagens" name="funcao.png" width="277px" height="43px"/>
+                <p:panel header="Minimização Rota pci">
+                    <!--<p:graphicImage library="imagens" name="funcao.png" width="277px" height="43px"/>-->
                 </p:panel>
             </p:layoutUnit>
 
@@ -27,32 +27,16 @@
                     <h:form>
                         <h:panelGrid columns="2">
                             <h:outputLabel value="Tamanho da população:" style="float: right"/> 
-                            <p:inputText value="#{agController.ag.tamanhoPopulacao}" size="5"/>
+                            <p:inputText value="#{agController.ag.tmPopulacao}" size="5"/>
 
                             <h:outputLabel value="Número de gerações:" style="float: right"/>
                             <p:inputText value="#{agController.ag.numeroGeracoes}" size="5"/>
 
-                            <h:outputLabel value="Cromossomo:" style="float: right"/>
-                            <h:panelGroup>
-                                <p:inputText id="tmc" value="#{agController.ag.tamanhoCromossomo}" size="5" disabled="true"/>
-                                <p:slider for="tmc" step="2" minValue="10" maxValue="50"/>
-                            </h:panelGroup>
-
                             <h:outputLabel value="Taxa de Cruzamento:" style="float: right"/>
-                            <p:spinner value="#{agController.ag.taxaCruzamento}" stepFactor="0.05" min="0" max="1" size="5"/>
+                            <p:spinner value="#{agController.ag.txCruzamento}" stepFactor="0.05" min="0" max="1" size="5"/>
 
                             <h:outputLabel value="Taxa de mutação:" style="float: right"/>
-                            <p:spinner value="#{agController.ag.taxaMutacao}" stepFactor="0.01" max="1" min="0" size="5"/>
-
-                            <h:outputLabel value="Crossover:" style="float: right"/>
-                            <p:selectOneMenu value="#{agController.ag.tipoCrossover}">
-                                <f:selectItems value="#{agController.crossovers}"/>
-                            </p:selectOneMenu>
-
-                            <h:outputLabel value="Seleção:" style="float: right"/>
-                            <p:selectOneMenu value="#{agController.ag.selecao}">
-                                <f:selectItems value="#{agController.selecoes}"/>
-                            </p:selectOneMenu>
+                            <p:spinner value="#{agController.ag.txMutacao}" stepFactor="0.01" max="1" min="0" size="5"/>
 
                             <h:outputLabel value="Elitismo:" style="float: right"/>
                             <p:selectBooleanCheckbox value="#{agController.ag.elitismo}"/>
@@ -76,8 +60,9 @@
                             <p:fieldset legend="Melhor Fitness" style="margin-bottom:20px">
                                 <h:outputText value="#{agController.melhorSolucaoEncontrada.fitness}"/>
                             </p:fieldset>
-                            <p:fieldset legend="Posição Melhor Fitness" style="margin-bottom:20px">
-                                <h:outputText value="[#{agController.melhorSolucaoEncontrada.x[0]}, #{agController.melhorSolucaoEncontrada.x[1]}]"/>
+                            <p:fieldset legend="Rota Melhor Fitness" style="margin-bottom:20px">
+                                <h:outputText value="#{agController.melhorSolucaoEncontrada}"/>
+                                
                             </p:fieldset>
                         </p:panelGrid>
                     </p:tab>

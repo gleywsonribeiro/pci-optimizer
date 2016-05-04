@@ -46,6 +46,7 @@ public class Populacao {
     public Populacao(int tamanho) {
         this.tamanho = tamanho;
         individuos = new ArrayList<>();
+        temp = new ArrayList<>();
         inicialize();
     }
 

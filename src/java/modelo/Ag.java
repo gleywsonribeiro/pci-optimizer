@@ -19,22 +19,17 @@ public class Ag {
     private double txCruzamento;
     private boolean elitismo;
     
-    private final List<Cromossomo> pioresIndividuos;
     private final List<Cromossomo> melhoresIndividuos;
-    private final List<Float> desvioPadrao;
     private final List<Float> media;
 
     public Ag() {
-        this.pioresIndividuos = new ArrayList<>();
         this.melhoresIndividuos = new ArrayList<>();
-        this.desvioPadrao = new ArrayList<>();
         this.media = new ArrayList<>();
     }
     
     public void run() {
         Populacao p = new Populacao(tmPopulacao);
         p.setElitismo(elitismo);
-        
         
         for(int i = 0; i <= numeroGeracoes; i++) {
             p.geracao(txCruzamento, txMutacao);
@@ -81,6 +76,14 @@ public class Ag {
 
     public void setElitismo(boolean elitismo) {
         this.elitismo = elitismo;
+    }
+
+    public List<Float> getMedia() {
+        return media;
+    }
+
+    public List<Cromossomo> getMelhoresIndividuos() {
+        return melhoresIndividuos;
     }
     
     
