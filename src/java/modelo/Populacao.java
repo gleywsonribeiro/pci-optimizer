@@ -6,7 +6,6 @@
 package modelo;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -42,6 +41,7 @@ public class Populacao {
     private List<Cromossomo> temp;
     private final int tamanho;
     private boolean elitismo;
+    private double txMutacao;
 
     public Populacao(int tamanho) {
         this.tamanho = tamanho;
@@ -56,10 +56,33 @@ public class Populacao {
         if (isElitismo()) {
             temp.add(elitismo());
         }
-
-        while(temp.size() < this.tamanho) {
-            xxx
+        Cromossomo filhos[];
+        
+        while (temp.size() < this.tamanho) {
+            Cromossomo[] pais = new Cromossomo[2];
+            pais[0] = seleciona();
+            do {
+                pais[1] = seleciona();
+            } while (pais[0].equals(pais[1]));
+            if(chanceDeCruzamento < txCruzamento) {
+                filhos = pais[0].cruza(pais[1], txMutacao);
+                for (Cromossomo filho : filhos) {
+                    if (temp.size() < this.tamanho) {
+                        temp.add(filho);
+                    }
+                }
+            } else {
+                for (Cromossomo pai : pais) {
+                    if (temp.size() < this.tamanho) {
+                        temp.add(pai);
+                    }
+                }
+            }
+            
         }
+        individuos.clear();
+        individuos.addAll(temp);
+        temp.clear();
     }
 
     public int getTamanho() {
@@ -82,13 +105,20 @@ public class Populacao {
         return elitismo;
     }
 
+    public double getTxMutacao() {
+        return txMutacao;
+    }
+
+    public void setTxMutacao(double txMutacao) {
+        this.txMutacao = txMutacao;
+    }
+
     private void inicialize() {
         for (int i = 0; i < tamanho; i++) {
             individuos.add(new Cromossomo(pontos));
         }
     }
 
-   
     private Cromossomo elitismo() {
         Cromossomo maisApto = null;
         double valor = Double.MAX_VALUE;
@@ -101,16 +131,61 @@ public class Populacao {
         }
         return maisApto;
     }
+
+    private Cromossomo seleciona() {
+        int n = 3;
+        return torneio(n);
+    }
+
+    private Cromossomo torneio(int n) {
+        if (n < 1 && n > individuos.size()) {
+            //criar um mecanismo pra evitar esse erro
+            System.err.println("Numero de competidores fora da faixa válida!");
+        }
+
+        Cromossomo[] competidores = new Cromossomo[n];
+        int[] numeroCompetidores = new int[n];
+        Random random = new Random();
+        for (int i = 0; i < numeroCompetidores.length; i++) {
+            boolean repete;
+            do {
+                repete = false;
+                numeroCompetidores[i] = 1 + random.nextInt(individuos.size() - 1);
+                for (int j = 0; j < i; j++) {
+                    if (numeroCompetidores[i] == numeroCompetidores[j]) {
+                        repete = true;
+                        break;
+                    }
+                }
+            } while (repete);
+        }
+
+        for (int i = 0; i < competidores.length; i++) {
+            competidores[i] = individuos.get(numeroCompetidores[i]);
+        }
+
+        Cromossomo maisApto = null;
+        double valor = Float.MAX_VALUE;
+        for (Cromossomo competidor : competidores) {
+            if (competidor.getFitness() < valor) {
+                valor = competidor.getFitness();
+                maisApto = competidor;
+            }
+        }
+        return maisApto;
+    }
     
-    private Casal casamento() {
-        Cromossomo pai = seleciona(selecao);
-
-        Cromossomo mae;
-        do {
-            mae = seleciona(selecao);
-        } while (pai.equals(mae));
-
-        return new Casal(pai, mae, crossover);
+    public Cromossomo getMelhorIndividuo() {
+        return elitismo();
+    }
+    
+    public float getMedia() {
+        float somatorio = 0;
+        for (Cromossomo individuo : individuos) {
+            somatorio += individuo.getFitness();
+        }
+        float media = (somatorio / individuos.size());
+        return media;
     }
 
     @Override

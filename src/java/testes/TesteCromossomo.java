@@ -15,11 +15,11 @@ import modelo.Ponto;
 public class TesteCromossomo {
 
     public static void main(String[] args) {
-        Ponto[] pontos = {new Ponto(0, 0), new Ponto(3, 0), new Ponto(5, 0)};
+        Ponto[] pontos = new Ponto[10];
         
-//        for (int i = 0; i < pontos.length; i++) {
-//            pontos[i] = new Ponto();
-//        }
+        for (int i = 0; i < pontos.length; i++) {
+            pontos[i] = new Ponto();
+        }
         
         
 
@@ -55,7 +55,18 @@ public class TesteCromossomo {
         System.out.println("Fitness do mutavel: ");
         System.out.println(mutavel.getFitness());
         
+        System.out.println("Fazendo Cruzamento: ");
+        Cromossomo a = new Cromossomo(pontos);
+        Cromossomo b = new Cromossomo(pontos);
         
+        Cromossomo filhos[] = a.cruza(b, 0.1);
+        System.out.println("pais:");
+        System.out.println(a);
+        System.out.println(b);
+        System.out.println("filhos:");
+        for (Cromossomo filho : filhos) {
+            System.out.println(filho);
+        }
         
     }
 }
