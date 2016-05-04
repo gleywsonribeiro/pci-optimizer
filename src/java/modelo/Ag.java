@@ -31,7 +31,17 @@ public class Ag {
         this.media = new ArrayList<>();
     }
     
-    public void run()
+    public void run() {
+        Populacao p = new Populacao(tmPopulacao);
+        p.setElitismo(elitismo);
+        
+        
+        for(int i = 0; i <= numeroGeracoes; i++) {
+            p.geracao(txCruzamento, txMutacao);
+            melhoresIndividuos.add(p.getMelhorIndividuo());
+            media.add(p.getMedia());
+        }
+    }
 
     public int getTmPopulacao() {
         return tmPopulacao;
