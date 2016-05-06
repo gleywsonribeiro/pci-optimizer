@@ -7,6 +7,8 @@ package modelo;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -45,17 +47,34 @@ public class Cromossomo implements Comparable<Cromossomo> {
         //com os filhos resultantes do cruzamento
         for (int k = 0; k < filhos.length; k++) {
             filhos[k] = new Cromossomo(pontos);
+            filhos[k].caminho.clear();
         }
+        
         //--
         int pontoDeCorte = random.nextInt(getTamanho() - 1);
 
         for (int i = 0; i < this.getTamanho(); i++) {
             if (i < pontoDeCorte) {
-                filhos[0].caminho.set(i, this.caminho.get(i));
-                filhos[1].caminho.set(i, conj.caminho.get(i));
+                filhos[0].caminho.add(i, this.caminho.get(i));
+                filhos[1].caminho.add(i, conj.caminho.get(i));
             } else {
-                filhos[1].caminho.set(i, this.caminho.get(i));
-                filhos[0].caminho.set(i, conj.caminho.get(i));
+                filhos[1].caminho.add(i, this.caminho.get(i));
+                filhos[0].caminho.add(i, conj.caminho.get(i));
+            }
+        }
+        for (Cromossomo filho : filhos) {
+            //filho.caminho = new ArrayList<>(new HashSet<>(filho.caminho));
+            HashSet semRepeticao = new HashSet(filho.caminho);
+            filho.caminho.clear();
+            filho.caminho.addAll(semRepeticao);
+            
+            if(filho.caminho.size() < getTamanho()) {
+                Cromossomo c = new Cromossomo(pontos);
+                for (Integer next : c.caminho) {
+                    if(!filho.caminho.contains(next)) {
+                        filho.caminho.add(next);
+                    }
+                }
             }
         }
         for (Cromossomo filho : filhos) {
