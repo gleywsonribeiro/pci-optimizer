@@ -52,7 +52,6 @@ public class Populacao {
 
     public void geracao(double txCruzamento, double txMutacao) {
         Random r = new Random();
-        double chanceDeCruzamento = r.nextDouble();
 
         if (isElitismo()) {
             temp.add(elitismo());
@@ -65,6 +64,7 @@ public class Populacao {
             do {
                 pais[1] = seleciona();
             } while (pais[0].equals(pais[1]));
+            double chanceDeCruzamento = r.nextDouble();
             if(chanceDeCruzamento < txCruzamento) {
                 filhos = pais[0].cruza(pais[1], txMutacao);
                 for (Cromossomo filho : filhos) {
