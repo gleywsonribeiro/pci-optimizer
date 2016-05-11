@@ -39,7 +39,7 @@
                             <p:spinner value="#{agController.ag.txMutacao}" stepFactor="0.01" max="1" min="0" size="5"/>
 
                             <h:outputLabel value="Elitismo:" style="float: right"/>
-                            <p:selectBooleanCheckbox value="#{agController.ag.elitismo}"/>
+                            <p:inputSwitch value="#{agController.ag.elitismo}"/>
              
                             <p:commandButton actionListener="#{agController.execute()}" value="Executar" ajax="false"/>
                         </h:panelGrid>
@@ -69,12 +69,7 @@
                     <p:tab title="Indivíduos">
                         
                     </p:tab>
-                    <p:tab title="Funcão">
-                        <p:graphicImage library="imagens" name="f06.png" width="80%" height="80%"/>
-                    </p:tab>
-                    <p:tab title="Modelagem">
-                        <p:graphicImage library="imagens" name="AG.png" width="80%" height="80%"/>
-                    </p:tab>
+                    
                 </p:tabView>
 
             </p:layoutUnit>
