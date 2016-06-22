@@ -20,11 +20,15 @@ public class Ag {
     private boolean elitismo;
     
     private final List<Cromossomo> melhoresIndividuos;
+    private final List<Cromossomo> pioresIndividuos;
+    private final List<Float> desvioPadrao;
     private final List<Float> media;
 
     public Ag() {
         this.melhoresIndividuos = new ArrayList<>();
+        this.pioresIndividuos = new ArrayList<>();
         this.media = new ArrayList<>();
+        this.desvioPadrao = new ArrayList<>();
     }
     
     public void run() {
@@ -34,7 +38,10 @@ public class Ag {
         for(int i = 0; i <= numeroGeracoes; i++) {
             p.geracao(txCruzamento, txMutacao);
             melhoresIndividuos.add(p.getMelhorIndividuo());
+            pioresIndividuos.add(p.getPiorIndividuo());
             media.add(p.getMedia());
+            desvioPadrao.add(p.getDesvioPadrao());
+            
         }
     }
 
@@ -84,6 +91,14 @@ public class Ag {
 
     public List<Cromossomo> getMelhoresIndividuos() {
         return melhoresIndividuos;
+    }
+
+    public List<Cromossomo> getPioresIndividuos() {
+        return pioresIndividuos;
+    }
+
+    public List<Float> getDesvioPadrao() {
+        return desvioPadrao;
     }
     
     
