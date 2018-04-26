@@ -57,8 +57,8 @@ public class Cromossomo implements Comparable<Cromossomo> {
             if (i < pontoDeCorte) {
 //                filhos[0].caminho.add(i, this.caminho.get(i));
 //                filhos[1].caminho.add(i, conj.caminho.get(i));
-                for (int j = 0; j < filhos.length; j++) {
-                    filhos[j].caminho.add(i, this.caminho.get(i));
+                for (Cromossomo filho : filhos) {
+                    filho.caminho.add(i, this.caminho.get(i));
                 }
             } else {
                 for (int j = filhos.length - 1; j >= 0; j--) {
